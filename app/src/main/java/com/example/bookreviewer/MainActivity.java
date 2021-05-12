@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
         btnGetData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               new GetDataTask(MainActivity.this).execute();
+                txtView.setText("");
+                new GetDataTask(MainActivity.this).execute();
             }
         });
     }
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private static class GetDataTask extends AsyncTask<Void, String, Void> {
         private static final String TAG = "GetDataTask";
         private BookEndPoint endPoint;
-        private VolumeModel model;
         private WeakReference<MainActivity> activityReference;
 
         GetDataTask(MainActivity context) {
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NotNull Call<VolumeModel> call, @NotNull Response<VolumeModel> response) {
                     if (response.isSuccessful()) {
-                        model = response.body();
+                        VolumeModel model = response.body();
 
                         String txtResult = "";
                         for (VolumeModel.Items items: model.getItems()) {
