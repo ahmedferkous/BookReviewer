@@ -4,498 +4,508 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="25dp">
-
-    <RelativeLayout
-        android:id="@+id/bookImageTextRelLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
-
-        <TextView
-            android:id="@+id/bookName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Book Name"
-            android:textSize="15sp"
-            android:textStyle="italic|bold" />
-
-        <ImageView
-            android:id="@+id/bookImageView"
-            android:layout_width="175dp"
-            android:layout_height="175dp"
-            android:layout_below="@id/bookName"
-            android:layout_marginTop="10dp"
-            tools:srcCompat="@tools:sample/avatars" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/authPubLinLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/bookImageTextRelLayout"
-        android:layout_marginTop="15dp">
-
-        <TextView
-            android:id="@+id/txtBy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="By:"
-            android:textSize="10sp" />
-
-        <TextView
-            android:id="@+id/txtAuthorNames"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@id/txtBy"
-            android:text="Author Name/s"
-            android:textSize="10sp"
-            android:textStyle="italic" />
-
-        <TextView
-            android:id="@+id/txtPubBy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/txtPubDate"
-            android:text="Published:"
-            android:textSize="10sp" />
-
-        <TextView
-            android:id="@+id/txtPubDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="3dp"
-            android:text="DD/MM/YYYY"
-            android:textSize="10sp"
-            android:textStyle="italic" />
-
-    </RelativeLayout>
+    android:layout_margin="8dp">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/authPubLinLayout">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/volumeRelLayout"
-                android:layout_width="match_parent"
+                android:id="@+id/bookImageTextRelLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp">
+                android:layout_centerHorizontal="true">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/bookName"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:outlineProvider="paddedBounds"
-                    android:backgroundTint="#EDFFFFFF"
-                    android:elevation="20dp">
+                    android:layout_centerHorizontal="true"
+                    android:text="Book Name"
+                    android:textSize="14sp"
+                    android:textStyle="italic|bold" />
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="14dp"
-                        android:layout_marginBottom="20dp">
-
-                        <LinearLayout
-                            android:id="@+id/pubNameLinLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Published By:"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txtPublisher"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:text="Publisher Name/s"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/txtDecBy"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/pubNameLinLayout"
-                            android:layout_marginTop="10dp"
-                            android:text="Description:"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txtDescription"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/txtDecBy"
-                            android:layout_marginTop="5dp"
-                            android:text="Desc"
-                            android:textSize="12sp"/>
-
-                        <LinearLayout
-                            android:id="@+id/RatingsLinLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/txtDescription"
-                            android:layout_marginTop="10dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Ratings Count:"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txtRatingsCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="2dp"
-                                android:text="1255"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/AverageRatingLinLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/RatingsLinLayout"
-                            android:layout_marginTop="10dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Average Rating:"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txtAverageRating"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="2dp"
-                                android:text="5"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/MaturityRatingLinLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/AverageRatingLinLayout"
-                            android:layout_marginTop="10dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Maturity: "
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txtMaturityRating"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="2dp"
-                                android:text="NOT MATURE"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/PageCountLinLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/MaturityRatingLinLayout"
-                            android:layout_marginTop="10dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Page Count: "
-                                android:textSize="12sp"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:id="@+id/txtPageCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="2dp"
-                                android:text="3005"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/CategoriesRelLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/txtDescription"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="80dp">
-
-                            <TextView
-                                android:id="@+id/txtCategories"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Categories:"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/categoriesRecView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/txtCategories"
-                                tools:itemCount="4"/>
-
-                        </RelativeLayout>
-
-                    </RelativeLayout>
-                </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:id="@+id/bookImageView"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_below="@id/bookName"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/ic_launcher_background" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/saleInfoRelLayout"
+                android:id="@+id/authPubLinLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/volumeRelLayout"
-                android:layout_marginTop="4dp">
+                android:layout_below="@id/bookImageTextRelLayout"
+                android:layout_marginTop="10dp">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardViewSaleInfo"
-                    android:outlineProvider="paddedBounds"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/txtBy"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#EDFFFFFF"
-                    android:elevation="20dp">
+                    android:layout_marginStart="5dp"
+                    android:text="By:"
+                    android:textSize="11sp" />
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="14dp"
-                        android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/txtAuthorNames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@id/txtBy"
+                    android:text="Author Name/s"
+                    android:textSize="11sp"
+                    android:textStyle="italic" />
 
-                        <RelativeLayout
-                            android:id="@+id/countryEpubLinLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txtPubBy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/txtPubDate"
+                    android:text="Published:"
+                    android:textSize="11sp" />
 
-                            <TextView
-                                android:id="@+id/txtCountryBy"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Country:"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/txtPubDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="3dp"
+                    android:text="DD/MM/YYYY"
+                    android:textSize="11sp"
+                    android:textStyle="italic" />
 
-                            <TextView
-                                android:id="@+id/txtCountryName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@id/txtCountryBy"
-                                android:text="Country Name"
-                                android:textSize="12sp" />
+            </RelativeLayout>
 
-                            <TextView
-                                android:id="@+id/txtEpubAvailability"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:text="View/Na"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:layout_toLeftOf="@id/txtEpubAvailability"
-                                android:text="Epub:"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/saleabilityPDFRelLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/countryEpubLinLayout"
-                            android:layout_marginTop="10dp">
-
-                            <TextView
-                                android:id="@+id/txtSaleBy"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Saleability: "
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txtSaleability"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@id/txtSaleBy"
-                                android:text="SALEABILITY"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/txtPdfAvailability"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:text="View/Na"
-                                android:textSize="12sp"
-                                android:layout_marginRight="1dp"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="8dp"
-                                android:layout_toLeftOf="@id/txtPdfAvailability"
-                                android:text="PDF:"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/ebookStatusRelLayout"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@id/saleabilityPDFRelLayout">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/txtEbookBy"
-                                android:text="EBook Status:"
-                                android:textSize="12sp"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/txtEbookStatus"
-                                android:text="YES/NO"
-                                android:layout_toRightOf="@id/txtEbookBy"
-                                android:textSize="12sp"
-                                android:layout_marginLeft="5dp"/>
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@id/ebookStatusRelLayout"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/listedPriceRelLayout">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:id="@+id/txtListedPriceBy"
-                                android:text="Listed Price:"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/txtListedPrice"
-                                android:textSize="12sp"
-                                android:layout_toRightOf="@id/txtListedPriceBy"
-                                android:text="Price CurrencyCode"
-                                android:layout_marginLeft="5dp"/>
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@+id/listedPriceRelLayout"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/retailPriceRelLayout">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:id="@+id/txtRetailPriceBy"
-                                android:text="Retail Price:"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/txtRetailPrice"
-                                android:textSize="12sp"
-                                android:layout_toRightOf="@id/txtRetailPriceBy"
-                                android:text="Price CurrencyCode"
-                                android:layout_marginLeft="5dp"/>
-
-                        </RelativeLayout>
-
-                    </RelativeLayout>
-
-                </com.google.android.material.card.MaterialCardView>
+            <RelativeLayout
+                android:id="@+id/mainRelLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/authPubLinLayout">
 
                 <RelativeLayout
-                    android:id="@+id/ViewLinLayout"
+                    android:id="@+id/volumeRelLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/cardViewSaleInfo"
                     android:layout_marginTop="4dp">
 
-                    <TextView
-                        android:id="@+id/txtViewOnGoogleBooks"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardView"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="View on Google Books"
-                        android:textSize="10sp" />
+                        android:elevation="20dp"
+                        android:outlineProvider="paddedBounds">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Add to your favourites"
-                        android:layout_centerInParent="true"
-                        android:textSize="10sp"
-                        android:id="@+id/txtAddToFavourites"/>
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
+                            android:layout_marginBottom="20dp">
 
-                    <TextView
-                        android:id="@+id/txtViewSaleInfo"
-                        android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:id="@+id/pubNameLinLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Published By:"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtPublisher"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="Publisher Name/s"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/txtDecBy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/pubNameLinLayout"
+                                android:layout_marginTop="10dp"
+                                android:text="Description:"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/txtDescription"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtDecBy"
+                                android:layout_marginTop="5dp"
+                                android:text="Desc"
+                                android:textSize="12sp" />
+
+                            <LinearLayout
+                                android:id="@+id/RatingsLinLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtDescription"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Ratings Count:"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtRatingsCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="2dp"
+                                    android:text="1255"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/AverageRatingLinLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/RatingsLinLayout"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Average Rating:"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtAverageRating"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="2dp"
+                                    android:text="5"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/MaturityRatingLinLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/AverageRatingLinLayout"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Maturity: "
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtMaturityRating"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="2dp"
+                                    android:text="NOT MATURE"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/PageCountLinLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/MaturityRatingLinLayout"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Page Count: "
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtPageCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="2dp"
+                                    android:text="3005"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/CategoriesRelLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtDescription"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="80dp">
+
+                                <TextView
+                                    android:id="@+id/txtCategories"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Categories:"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/categoriesRecView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/txtCategories"
+                                    tools:itemCount="4" />
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/saleInfoRelLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/volumeRelLayout"
+                    android:layout_marginTop="4dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewSaleInfo"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="5dp"
-                        android:text="Buy from Google Books"
-                        android:textSize="10sp" />
+                        android:elevation="20dp"
+                        android:outlineProvider="paddedBounds">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
+                            android:layout_marginBottom="20dp">
+
+                            <RelativeLayout
+                                android:id="@+id/countryEpubLinLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/txtCountryBy"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Country:"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtCountryName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/txtCountryBy"
+                                    android:text="Country Name"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/txtEpubAvailability"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/txtEpubBy"
+                                    android:text="View/Na"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/txtEpubBy"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="80dp"
+                                    android:layout_toRightOf="@id/txtCountryName"
+                                    android:text="Epub:"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/saleabilityPDFRelLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/countryEpubLinLayout"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:id="@+id/txtSaleBy"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Saleability: "
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtSaleability"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/txtSaleBy"
+                                    android:text="SALEABILITY"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/txtPdfAvailability"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/txtPdfBy"
+                                    android:text="View/Na"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/txtPdfBy"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="70dp"
+                                    android:layout_toRightOf="@id/txtSaleability"
+                                    android:text="PDF:"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/ebookStatusRelLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/saleabilityPDFRelLayout"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:id="@+id/txtEbookBy"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="EBook Status:"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtEbookStatus"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/txtEbookBy"
+                                    android:text="YES/NO"
+                                    android:textSize="12sp" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/listedPriceRelLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/ebookStatusRelLayout"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:id="@+id/txtListedPriceBy"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Listed Price:"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtListedPrice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/txtListedPriceBy"
+                                    android:text="Price CurrencyCode"
+                                    android:textSize="12sp" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/retailPriceRelLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/listedPriceRelLayout"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:id="@+id/txtRetailPriceBy"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Retail Price:"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtRetailPrice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/txtRetailPriceBy"
+                                    android:text="Price CurrencyCode"
+                                    android:textSize="12sp" />
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </RelativeLayout>
 
             </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/viewLinLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mainRelLayout"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/txtViewOnGoogleBooks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="View on Google Books"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/txtAddToFavourites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Add to your favourites"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/txtViewSaleInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="5dp"
+                    android:text="Buy from Google Books"
+                    android:textSize="11sp" />
+
+            </RelativeLayout>
+
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
+
 
 </RelativeLayout>
