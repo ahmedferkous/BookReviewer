@@ -1,5 +1,5 @@
 
-package com.example.bookreviewer;
+package com.example.bookreviewer.DataFiles;
 
 import android.app.Activity;
 

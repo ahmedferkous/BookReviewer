@@ -1,13 +1,16 @@
-package com.example.bookreviewer;
+package com.example.bookreviewer.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.bookreviewer.DataFiles.BookEndPoint;
+import com.example.bookreviewer.R;
+import com.example.bookreviewer.DataFiles.VolumeModel;
 
 import org.jetbrains.annotations.NotNull;
 
