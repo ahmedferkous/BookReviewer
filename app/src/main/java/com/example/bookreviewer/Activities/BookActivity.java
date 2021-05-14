@@ -27,9 +27,9 @@ import static com.example.bookreviewer.Activities.WebsiteActivity.LINK;
 
 public class BookActivity extends AppCompatActivity {
     public static final String BOOK_KEY = "book_key";
-    private TextView txtBookName, txtDecBy, txtAuthorNames, txtPubDate, txtPubBy, txtPublisher, txtDesc, txtRatingsCount, txtAverageRating, txtAuthorBy, txtEbookBy, txtRetailPriceBy, txtListedPriceBy, txtMaturityRating, txtPageCount, txtCountryName, txtSaleability, txtListedPrice, txtEbookStatus, txtRetailPrice, txtViewOnGoogleBooks, txtAddToFavourites, txtBuyFromBooks;
+    private TextView txtBookName, txtDecBy, txtAuthorNames, txtPubDate, txtPubBy, txtPublisher, txtDesc, txtRatingsCount, txtAverageRating, txtAuthorBy, txtEbookBy, txtRetailPriceBy, txtListedPriceBy, txtMaturityRating, txtPageCount, txtCountryName, txtSaleability, txtListedPrice, txtEbookStatus, txtRetailPrice, txtViewOnGoogleBooks, txtAddToFavourites;
     private LinearLayout pubNameLinLayout, ratingsLinLayout, averageRatingLinLayout, maturityRatingLinLayout, pageCountLinLayout;
-    private RelativeLayout categoriesRelLayout, countryRelLayout, saleabilityRelLayout;
+    private RelativeLayout categoriesRelLayout, countryRelLayout, saleabilityRelLayout, pubDateRelLayout;
     private RecyclerView categories;
     private ImageView bookImageView;
     private Gson gson = new Gson();
@@ -70,28 +70,6 @@ public class BookActivity extends AppCompatActivity {
                         builder.create().show();
                     }
                 });
-                txtBuyFromBooks.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(BookActivity.this)
-                                .setTitle("Navigating...")
-                                .setMessage("Buy this book from Google Books?")
-                                .setNegativeButton("No", null)
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        String url = inboundBook.getSaleInfo().getBuyLink();
-                                        if (url != null) {
-                                            Intent websiteIntent = new Intent(BookActivity.this, WebsiteActivity.class);
-                                            websiteIntent.putExtra(LINK, url);
-                                            startActivity(websiteIntent);
-                                        }
-                                    }
-                                });
-                        builder.create().show();
-                    }
-                });
-
                 txtAddToFavourites.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -126,7 +104,6 @@ public class BookActivity extends AppCompatActivity {
         txtRetailPrice = findViewById(R.id.txtRetailPrice);
         txtViewOnGoogleBooks = findViewById(R.id.txtViewOnGoogleBooks);
         txtAddToFavourites = findViewById(R.id.txtAddToFavourites);
-        txtBuyFromBooks = findViewById(R.id.txtBuyFromBooks);
         categories = findViewById(R.id.categoriesRecView);
         bookImageView = findViewById(R.id.bookImageView);
         pubNameLinLayout = findViewById(R.id.pubNameLinLayout);
@@ -137,11 +114,11 @@ public class BookActivity extends AppCompatActivity {
         categoriesRelLayout = findViewById(R.id.categoriesRelLayout);
         countryRelLayout = findViewById(R.id.countryRelLayout);
         saleabilityRelLayout = findViewById(R.id.saleabilityRelLayout);
+        pubDateRelLayout = findViewById(R.id.pubDateRelLayout);
     }
 
     private void setData(VolumeModel.Items book) {
-        // TODO: 14/05/2021 Load image
-        //txtBookName.setText(book.getVolumeInfo().getTitle());
+        // TODO: 14/05/2021 Load image here
 
         if (book.getVolumeInfo().getTitle() != null) {
             txtBookName.setText(book.getVolumeInfo().getTitle());
@@ -163,8 +140,7 @@ public class BookActivity extends AppCompatActivity {
         if (book.getVolumeInfo().getPublishedDate() != null) {
             txtPubDate.setText(book.getVolumeInfo().getPublishedDate());
         } else {
-            txtPubDate.setVisibility(View.GONE);
-            txtPubBy.setVisibility(View.GONE);
+            pubDateRelLayout.setVisibility(View.GONE);
         }
 
         if (book.getVolumeInfo().getPublisher() != null) {

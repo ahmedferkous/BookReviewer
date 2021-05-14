@@ -51,7 +51,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
 
         holder.txtBookName.setText(boundedBook.getVolumeInfo().getTitle());
 
-        // TODO: 14/05/2021 Fix image loading issue 
+        // TODO: 14/05/2021 Fix image loading issue in adapter
         /*
         String imageUrl = boundedBook.getVolumeInfo().getImageLinks().getThumbnail();
 

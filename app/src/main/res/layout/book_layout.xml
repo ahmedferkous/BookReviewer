@@ -25,7 +25,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="N/A"
+                    android:text="Book Name"
                     android:textSize="14sp"
                     android:textStyle="italic|bold" />
 
@@ -39,57 +39,45 @@
                     android:src="@drawable/ic_launcher_background" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/authPubLinLayout"
-                android:layout_width="match_parent"
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/authorPublishedDateHorizontalScrollView"
                 android:layout_below="@id/bookImageTextRelLayout"
                 android:layout_marginTop="10dp">
 
-                <TextView
-                    android:id="@+id/txtAuthorBy"
+                <RelativeLayout
+                    android:id="@+id/authLinLayout"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="By:"
-                    android:textSize="11sp" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/txtAuthorNames"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:layout_toRightOf="@id/txtAuthorBy"
-                    android:text="N/A"
-                    android:textSize="11sp"
-                    android:textStyle="italic" />
+                    <TextView
+                        android:id="@+id/txtAuthorBy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="By:"
+                        android:textSize="12sp" />
 
-                <TextView
-                    android:id="@+id/txtPubBy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_toLeftOf="@+id/txtPubDate"
-                    android:text="Published:"
-                    android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/txtAuthorNames"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_toRightOf="@id/txtAuthorBy"
+                        android:text="Author Name/s"
+                        android:textSize="12sp"
+                        android:textStyle="italic" />
 
-                <TextView
-                    android:id="@+id/txtPubDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="3dp"
-                    android:text="N/A"
-                    android:textSize="11sp"
-                    android:textStyle="italic" />
+                </RelativeLayout>
 
-            </RelativeLayout>
+            </HorizontalScrollView>
 
             <RelativeLayout
                 android:id="@+id/mainRelLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/authPubLinLayout">
+                android:layout_below="@id/authorPublishedDateHorizontalScrollView">
 
                 <RelativeLayout
                     android:id="@+id/volumeRelLayout"
@@ -102,12 +90,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:elevation="20dp"
-                        android:outlineProvider="paddedBounds">
+                        android:outlineProvider="paddedBounds"
+                        android:backgroundTint="#6DE3E2E2">
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="14dp"
+                            android:layout_margin="10dp"
                             android:layout_marginBottom="20dp">
 
                             <LinearLayout
@@ -128,16 +117,43 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="5dp"
-                                    android:text="N/A"
+                                    android:text="Publisher Name/s"
                                     android:textSize="12sp" />
 
                             </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/pubDateRelLayout"
+                                android:layout_below="@id/pubNameLinLayout"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:id="@+id/txtPubBy"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Published:"
+                                    android:textStyle="bold"
+                                    android:textSize="12sp"/>
+
+                                <TextView
+                                    android:id="@+id/txtPubDate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@id/txtPubBy"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="Date"
+                                    android:textSize="12sp"
+                                    android:textStyle="italic" />
+
+                            </RelativeLayout>
 
                             <TextView
                                 android:id="@+id/txtDecBy"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/pubNameLinLayout"
+                                android:layout_below="@id/pubDateRelLayout"
                                 android:layout_marginTop="10dp"
                                 android:text="Description:"
                                 android:textSize="12sp"
@@ -149,7 +165,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/txtDecBy"
                                 android:layout_marginTop="5dp"
-                                android:text="N/A"
+                                android:text="Description"
                                 android:textSize="12sp"/>
 
                             <LinearLayout
@@ -171,7 +187,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="2dp"
-                                    android:text="N/A"
+                                    android:text="Number"
                                     android:textSize="12sp" />
 
                             </LinearLayout>
@@ -195,7 +211,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="2dp"
-                                    android:text="N/A"
+                                    android:text="Number"
                                     android:textSize="12sp" />
 
                             </LinearLayout>
@@ -219,7 +235,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="2dp"
-                                    android:text="N/A"
+                                    android:text="Constant"
                                     android:textSize="12sp" />
 
                             </LinearLayout>
@@ -243,7 +259,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="2dp"
-                                    android:text="N/A"
+                                    android:text="Number"
                                     android:textSize="12sp" />
 
                             </LinearLayout>
@@ -290,13 +306,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:elevation="20dp"
-                        android:outlineProvider="paddedBounds">
+                        android:outlineProvider="paddedBounds"
+                        android:backgroundTint="#6DE3E2E2">
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/countryRelLayout"
-                            android:layout_margin="14dp"
+                            android:layout_margin="10dp"
                             android:layout_marginBottom="20dp">
 
                             <RelativeLayout
@@ -318,7 +335,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="5dp"
                                     android:layout_toRightOf="@id/txtCountryBy"
-                                    android:text="N/A"
+                                    android:text="Country Symbol"
                                     android:textSize="12sp" />
 
                             </RelativeLayout>
@@ -344,7 +361,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="5dp"
                                     android:layout_toRightOf="@id/txtSaleBy"
-                                    android:text="N/A"
+                                    android:text="Constant"
                                     android:textSize="12sp" />
 
                             </RelativeLayout>
@@ -370,7 +387,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="5dp"
                                     android:layout_toRightOf="@id/txtEbookBy"
-                                    android:text="NO"
+                                    android:text="YES/GONE"
                                     android:textSize="12sp" />
 
                             </RelativeLayout>
@@ -396,7 +413,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="5dp"
                                     android:layout_toRightOf="@id/txtListedPriceBy"
-                                    android:text="N/A"
+                                    android:text="Price Symbol"
                                     android:textSize="12sp" />
 
                             </RelativeLayout>
@@ -422,7 +439,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="5dp"
                                     android:layout_toRightOf="@id/txtRetailPriceBy"
-                                    android:text="N/A"
+                                    android:text="Price Symbol"
                                     android:textSize="12sp" />
 
                             </RelativeLayout>
@@ -448,24 +465,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="View on Google Books"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/txtAddToFavourites"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="Add to your favourites"
-                    android:textSize="11sp" />
-
-                <TextView
-                    android:id="@+id/txtBuyFromBooks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="5dp"
-                    android:text="Buy from Google Books"
-                    android:textSize="11sp" />
+                    android:text="Add to your favourites"
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 

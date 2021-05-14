@@ -24,6 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+// TODO: 15/05/2021 Change main activity to do something else other than this placeholder class
 public class MainActivity extends AppCompatActivity {
     private Button btnGetData;
     private TextView txtView;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... values) {
-            Call<VolumeModel> call = endPoint.getVolumes("flowers inauthor:keyes");
+            Call<VolumeModel> call = endPoint.getVolumes("flowers inauthor:keyes", null, 0);
 
             call.enqueue(new Callback<VolumeModel>() {
                 @Override

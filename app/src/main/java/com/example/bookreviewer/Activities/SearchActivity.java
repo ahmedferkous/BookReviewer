@@ -95,7 +95,8 @@ public class SearchActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(String... strings) {
-            Call<VolumeModel> call = endPoint.getVolumes(strings[0]);
+            // TODO: 15/05/2021 Allow user to optimize amount of results, next page of volumes etc as well as other stuff
+            Call<VolumeModel> call = endPoint.getVolumes(strings[0], "15", 16); // 16 is the next 'page'
             call.enqueue(new Callback<VolumeModel>() {
                 @Override
                 public void onResponse(Call<VolumeModel> call, Response<VolumeModel> response) {
