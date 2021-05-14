@@ -11,8 +11,7 @@ import com.example.bookreviewer.R;
 
 public class WebsiteActivity extends AppCompatActivity {
     private WebView webView;
-    public static final String INFO_LINK = "info_link";
-    public static final String BUY_LINK = "buy_link";
+    public static final String LINK = "link";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +24,10 @@ public class WebsiteActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String url = "";
         if (intent != null) {
-            url = intent.getStringExtra(INFO_LINK);
-            if (url == null) {
-                url = intent.getStringExtra(BUY_LINK);
+            url = intent.getStringExtra(LINK);
+            if (url != null) {
+                webView.loadUrl(url);
             }
-            webView.loadUrl(url);
         }
     }
 

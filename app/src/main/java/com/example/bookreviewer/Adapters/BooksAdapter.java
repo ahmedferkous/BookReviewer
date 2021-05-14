@@ -1,6 +1,8 @@
 package com.example.bookreviewer.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +13,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bookreviewer.Activities.BookActivity;
 import com.example.bookreviewer.Models.VolumeModel;
 import com.example.bookreviewer.R;
 import com.google.android.material.card.MaterialCardView;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import static com.example.bookreviewer.Activities.BookActivity.BOOK_KEY;
+
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> {
+    private static final String TAG = "BooksAdapter";
     private ArrayList<VolumeModel.Items> books = new ArrayList<>();
+    private Gson gson = new Gson();
     private Context context;
 
     public BooksAdapter(Context context) {
@@ -42,15 +50,25 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
         VolumeModel.Items boundedBook = books.get(position);
 
         holder.txtBookName.setText(boundedBook.getVolumeInfo().getTitle());
+
+        // TODO: 14/05/2021 Fix image loading issue 
+        /*
+        String imageUrl = boundedBook.getVolumeInfo().getImageLinks().getThumbnail();
+
         Glide.with(context)
                 .asBitmap()
-                .load(boundedBook.getVolumeInfo().getImageLinks().getThumbnail())
+                .load(imageUrl)
                 .into(holder.imageViewBook);
+                
+         */
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 14/05/2021 Navigate user to the book activity
+                String json = gson.toJson(boundedBook);
+                Intent bookIntent = new Intent(context, BookActivity.class);
+                bookIntent.putExtra(BOOK_KEY, json);
+                context.startActivity(bookIntent);
             }
         });
     }

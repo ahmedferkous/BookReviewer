@@ -58,10 +58,10 @@ public class VolumeModel {
             private String publisher;
             private String publishedDate;
             private String description;
-            private int pageCount;
+            private String pageCount;
             private ArrayList<String> categories;
-            private int averageRating;
-            private int ratingsCount;
+            private String averageRating;
+            private String ratingsCount;
             private String maturityRating;
             private ImageObject imageLinks;
             private String infoLink;
@@ -90,7 +90,7 @@ public class VolumeModel {
                 return description;
             }
 
-            public int getPageCount() {
+            public String getPageCount() {
                 return pageCount;
             }
 
@@ -98,11 +98,11 @@ public class VolumeModel {
                 return categories;
             }
 
-            public int getAverageRating() {
+            public String getAverageRating() {
                 return averageRating;
             }
 
-            public int getRatingsCount() {
+            public String getRatingsCount() {
                 return ratingsCount;
             }
 
@@ -135,10 +135,14 @@ public class VolumeModel {
         public class SaleInfo {
             private String country;
             private String saleability;
-            private boolean isEbook;
             private ListPrice listPrice;
             private RetailPrice retailPrice;
+            private boolean isEbook;
             private String buyLink;
+
+            public boolean isEbook() {
+                return isEbook;
+            }
 
             public String getCountry() {
                 return country;
@@ -146,10 +150,6 @@ public class VolumeModel {
 
             public String getSaleability() {
                 return saleability;
-            }
-
-            public boolean isEbook() {
-                return isEbook;
             }
 
             public ListPrice getListPrice() {
