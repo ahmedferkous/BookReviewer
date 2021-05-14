@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.bookreviewer.DataFiles.BookEndPoint;
 import com.example.bookreviewer.R;
-import com.example.bookreviewer.DataFiles.VolumeModel;
+import com.example.bookreviewer.Models.VolumeModel;
 
 import org.jetbrains.annotations.NotNull;
 

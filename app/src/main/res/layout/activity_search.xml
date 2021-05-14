@@ -83,6 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_below="@id/mainRelLayout"
+        android:id="@+id/recView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"/>
 

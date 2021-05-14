@@ -1,5 +1,5 @@
 
-package com.example.bookreviewer.DataFiles;
+package com.example.bookreviewer.Models;
 
 import android.app.Activity;
 
