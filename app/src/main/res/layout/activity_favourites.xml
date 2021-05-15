@@ -6,6 +6,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recView"/>
+        android:id="@+id/recView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No saved books found"
+        android:layout_centerInParent="true"
+        android:id="@+id/txtWarning"
+        android:textStyle="italic"
+        android:visibility="gone"/>
 
 </RelativeLayout>

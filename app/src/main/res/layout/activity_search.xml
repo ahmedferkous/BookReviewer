@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:layout_margin="15dp">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,13 +14,14 @@
             android:id="@+id/edtTxtSearchBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="2dp"
             android:hint="Enter keywords"
             android:layout_toStartOf="@+id/btnSearch"/>
 
+
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:id="@+id/btnSearch"
             android:layout_marginTop="12dp"
@@ -39,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtSearchBy"
-                android:text="Search By"
+                android:text="Add keyword:"
                 android:textStyle="italic"/>
 
             <TextView
@@ -77,14 +79,57 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/linLayout"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtSeekBar"
+                android:text="Display results: "
+                android:textStyle="italic" />
+
+            <SeekBar
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:min="1"
+                android:max="40"
+                android:id="@+id/seekBar"
+                android:progress="15"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtProgress"
+                android:text="15/40" />
+
+        </LinearLayout>
+
+
+
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"
         android:layout_below="@id/mainRelLayout"
         android:id="@+id/recView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNextPage"
+        android:text="Next Page"
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

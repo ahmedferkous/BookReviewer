@@ -1,6 +1,8 @@
 package com.example.bookreviewer.Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +26,12 @@ import java.util.ArrayList;
 import static com.example.bookreviewer.Activities.BookActivity.BOOK_KEY;
 
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> {
+    public interface DeleteBook {
+        void onDeleteBookResult(VolumeModel.Items Book);
+    }
+
     private static final String TAG = "BooksAdapter";
+    private DeleteBook deleteBook;
     private ArrayList<VolumeModel.Items> books = new ArrayList<>();
     private Gson gson = new Gson();
     private Context context;
@@ -69,6 +76,29 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
                 Intent bookIntent = new Intent(context, BookActivity.class);
                 bookIntent.putExtra(BOOK_KEY, json);
                 context.startActivity(bookIntent);
+            }
+        });
+
+        holder.parent.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                        .setTitle("Removing...")
+                        .setMessage("Remove this book from your favourites?")
+                        .setNegativeButton("No", null)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    deleteBook = (DeleteBook) context;
+                                    deleteBook.onDeleteBookResult(boundedBook);
+                                } catch (ClassCastException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                builder.create().show();
+                return true;
             }
         });
     }

@@ -1,13 +1,17 @@
 package com.example.bookreviewer.Activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.bookreviewer.Adapters.BooksAdapter;
 import com.example.bookreviewer.DataFiles.BookEndPoint;
 import com.example.bookreviewer.R;
 import com.example.bookreviewer.Models.VolumeModel;
@@ -24,89 +28,32 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-// TODO: 15/05/2021 Change main activity to do something else other than this placeholder class
 public class MainActivity extends AppCompatActivity {
-    private Button btnGetData;
-    private TextView txtView;
+    private Button btnSearchForBooks;
+    private Button btnViewFavourites;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnGetData = findViewById(R.id.btnGetData);
-        txtView = findViewById(R.id.txtView);
+        btnSearchForBooks = findViewById(R.id.btnSearchBooks);
+        btnViewFavourites = findViewById(R.id.btnViewFavBooks);
 
-        btnGetData.setOnClickListener(new View.OnClickListener() {
+        btnSearchForBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtView.setText("");
-                new GetDataTask(MainActivity.this).execute();
+                Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(searchIntent);
+            }
+        });
+
+        btnViewFavourites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewFavouritesIntent = new Intent(MainActivity.this, FavouritesActivity.class);
+                startActivity(viewFavouritesIntent);
             }
         });
     }
-
-    private static class GetDataTask extends AsyncTask<Void, String, Void> {
-        private static final String TAG = "GetDataTask";
-        private BookEndPoint endPoint;
-        private WeakReference<MainActivity> activityReference;
-
-        GetDataTask(MainActivity context) {
-            activityReference = new WeakReference<>(context);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            clientBuilder.addInterceptor(interceptor);
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://www.googleapis.com")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(clientBuilder.build())
-                    .build();
-            endPoint = retrofit.create(BookEndPoint.class);
-        }
-
-        @Override
-        protected Void doInBackground(Void... values) {
-            Call<VolumeModel> call = endPoint.getVolumes("flowers inauthor:keyes", null, 0);
-
-            call.enqueue(new Callback<VolumeModel>() {
-                @Override
-                public void onResponse(@NotNull Call<VolumeModel> call, @NotNull Response<VolumeModel> response) {
-                    if (response.isSuccessful()) {
-                        VolumeModel model = response.body();
-
-                        String txtResult = "";
-                        for (VolumeModel.Items items: model.getItems()) {
-                            txtResult += items.getVolumeInfo().getTitle() + "\n";
-                        }
-                        publishProgress(txtResult);
-                    }
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<VolumeModel> call, @NotNull Throwable t) {
-                    t.printStackTrace();
-                }
-            });
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(String... values) { //executed on main thread
-            super.onProgressUpdate(values);
-
-            MainActivity activity = activityReference.get();
-            if (activity == null || activity.isFinishing()) return;
-
-            TextView txtView = activity.findViewById(R.id.txtView);
-            txtView.setText(values[0]);
-        }
-    }
-
 }

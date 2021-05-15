@@ -5,27 +5,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bookreviewer.Adapters.ListAdapter;
+import com.example.bookreviewer.DataFiles.FavouriteBooksDatabase;
 import com.example.bookreviewer.Models.VolumeModel;
 import com.example.bookreviewer.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import static com.example.bookreviewer.Activities.WebsiteActivity.LINK;
 
 public class BookActivity extends AppCompatActivity {
+    private static final String TAG = "BookActivity";
     public static final String BOOK_KEY = "book_key";
     private TextView txtBookName, txtDecBy, txtAuthorNames, txtPubDate, txtPubBy, txtPublisher, txtDesc, txtRatingsCount, txtAverageRating, txtAuthorBy, txtEbookBy, txtRetailPriceBy, txtListedPriceBy, txtMaturityRating, txtPageCount, txtCountryName, txtSaleability, txtListedPrice, txtEbookStatus, txtRetailPrice, txtViewOnGoogleBooks, txtAddToFavourites;
     private LinearLayout pubNameLinLayout, ratingsLinLayout, averageRatingLinLayout, maturityRatingLinLayout, pageCountLinLayout;
@@ -39,6 +47,7 @@ public class BookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_layout);
+        setTitle("Book Details");
 
         initViews();
 
@@ -73,7 +82,17 @@ public class BookActivity extends AppCompatActivity {
                 txtAddToFavourites.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO: 15/05/2021 add to favourites + navigate user
+                        AlertDialog.Builder builder = new AlertDialog.Builder(BookActivity.this)
+                                .setTitle("Add to favourites?")
+                                .setMessage("Add this book to your favourites list?")
+                                .setNegativeButton("No", null)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        new InsertIntoDBTask(BookActivity.this).execute(inboundBook);
+                                    }
+                                });
+                        builder.create().show();
                     }
                 });
 
@@ -119,6 +138,8 @@ public class BookActivity extends AppCompatActivity {
 
     private void setData(VolumeModel.Items book) {
         // TODO: 14/05/2021 Load image here
+
+        new ExistsInFavouritesDBTask(this).execute(book.getPrimary_key());
 
         if (book.getVolumeInfo().getTitle() != null) {
             txtBookName.setText(book.getVolumeInfo().getTitle());
@@ -193,7 +214,7 @@ public class BookActivity extends AppCompatActivity {
         }
 
         if (book.getSaleInfo().getListPrice() != null) {
-            String price = book.getSaleInfo().getListPrice().getAmount() + " " + book.getSaleInfo().getListPrice().getCurrencyCode();
+            String price = book.getSaleInfo().getListPrice().getList_price_amount() + " " + book.getSaleInfo().getListPrice().getList_price_currencyCode();
             txtListedPrice.setText(price);
         } else {
             txtListedPrice.setVisibility(View.GONE);
@@ -208,7 +229,7 @@ public class BookActivity extends AppCompatActivity {
         }
 
         if (book.getSaleInfo().getRetailPrice() != null) {
-            String price = book.getSaleInfo().getRetailPrice().getAmount() + " " + book.getSaleInfo().getRetailPrice().getCurrencyCode();
+            String price = book.getSaleInfo().getRetailPrice().getRetail_price_amount() + " " + book.getSaleInfo().getRetailPrice().getRetail_price_currencyCode();
             txtRetailPrice.setText(price);
         } else {
             txtRetailPrice.setVisibility(View.GONE);
@@ -222,6 +243,70 @@ public class BookActivity extends AppCompatActivity {
             listAdapter.setListItems(book.getVolumeInfo().getCategories());
         } else {
             categoriesRelLayout.setVisibility(View.GONE);
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent searchIntent = new Intent(this, SearchActivity.class);
+        startActivity(searchIntent);
+    }
+    private static class ExistsInFavouritesDBTask extends AsyncTask<Integer, Void, Integer> {
+        private WeakReference<BookActivity> activityReference;
+        private FavouriteBooksDatabase db;
+
+        ExistsInFavouritesDBTask(BookActivity context) {
+            activityReference = new WeakReference<>(context);
+        }
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            db = FavouriteBooksDatabase.getInstance(activityReference.get());
+            if (db.bookDao().getBookById(integers[0]) == null) {
+                return 1;
+            }
+            return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+
+            BookActivity activity = activityReference.get();
+            if (activity == null || activity.isFinishing()) return;
+
+            switch(integer) {
+                case 0:
+                    activityReference.get().findViewById(R.id.txtAddToFavourites).setVisibility(View.GONE);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private static class InsertIntoDBTask extends AsyncTask<VolumeModel.Items, Void, Void> {
+        private WeakReference<BookActivity> activityReference;
+        private FavouriteBooksDatabase db;
+
+        InsertIntoDBTask(BookActivity context){
+            activityReference = new WeakReference<>(context);
+        }
+
+        @Override
+        protected Void doInBackground(VolumeModel.Items... items) {
+            db = FavouriteBooksDatabase.getInstance(activityReference.get());
+            db.bookDao().insertFavouriteBook(items[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            BookActivity activity = activityReference.get();
+            if (activity == null || activity.isFinishing()) return;
+
+            activityReference.get().findViewById(R.id.txtAddToFavourites).setVisibility(View.GONE);
+            Toast.makeText(activityReference.get(), "Book added to your favourites", Toast.LENGTH_LONG).show();
         }
     }
 }

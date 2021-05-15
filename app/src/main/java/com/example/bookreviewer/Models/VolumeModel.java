@@ -1,8 +1,12 @@
 
 package com.example.bookreviewer.Models;
 
-import android.app.Activity;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.example.bookreviewer.DataFiles.ListConverter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -24,19 +28,47 @@ public class VolumeModel {
         return items;
     }
 
-    public class Items {
+    @Entity(tableName = "favourite_books")
+    public static class Items {
+        @PrimaryKey(autoGenerate = true)
+        private int primary_key;
         private String kind;
         private String id;
+        @Embedded
         private VolInfo volumeInfo;
+        @Embedded
         private SaleInfo saleInfo;
-        private AccessInfo accessInfo;
+
+        public int getPrimary_key() {
+            return primary_key;
+        }
+
+        public void setPrimary_key(int primary_key) {
+            this.primary_key = primary_key;
+        }
 
         public String getKind() {
             return kind;
         }
 
+        public void setKind(String kind) {
+            this.kind = kind;
+        }
+
         public String getId() {
             return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public void setVolumeInfo(VolInfo volumeInfo) {
+            this.volumeInfo = volumeInfo;
+        }
+
+        public void setSaleInfo(SaleInfo saleInfo) {
+            this.saleInfo = saleInfo;
         }
 
         public VolInfo getVolumeInfo() {
@@ -47,24 +79,39 @@ public class VolumeModel {
             return saleInfo;
         }
 
-        public AccessInfo getAccessInfo() {
-            return accessInfo;
-        }
-
-        public class VolInfo {
+        public static class VolInfo {
             public String title;
             private String subtitle;
+            @TypeConverters(ListConverter.class)
             private ArrayList<String> authors;
             private String publisher;
             private String publishedDate;
             private String description;
             private String pageCount;
+            @TypeConverters(ListConverter.class)
             private ArrayList<String> categories;
             private String averageRating;
             private String ratingsCount;
             private String maturityRating;
+            @Embedded
             private ImageObject imageLinks;
             private String infoLink;
+
+            public VolInfo(String title, String subtitle, ArrayList<String> authors, String publisher, String publishedDate, String description, String pageCount, ArrayList<String> categories, String averageRating, String ratingsCount, String maturityRating, ImageObject imageLinks, String infoLink) {
+                this.title = title;
+                this.subtitle = subtitle;
+                this.authors = authors;
+                this.publisher = publisher;
+                this.publishedDate = publishedDate;
+                this.description = description;
+                this.pageCount = pageCount;
+                this.categories = categories;
+                this.averageRating = averageRating;
+                this.ratingsCount = ratingsCount;
+                this.maturityRating = maturityRating;
+                this.imageLinks = imageLinks;
+                this.infoLink = infoLink;
+            }
 
             public String getTitle() {
                 return title;
@@ -118,12 +165,11 @@ public class VolumeModel {
                 return infoLink;
             }
 
-            public class ImageObject {
-                private String smallThumbnail;
+            public static class ImageObject {
                 private String thumbnail;
 
-                public String getSmallThumbnail() {
-                    return smallThumbnail;
+                public ImageObject(String thumbnail) {
+                    this.thumbnail = thumbnail;
                 }
 
                 public String getThumbnail() {
@@ -132,13 +178,24 @@ public class VolumeModel {
             }
         }
 
-        public class SaleInfo {
+        public static class SaleInfo {
             private String country;
             private String saleability;
+            @Embedded
             private ListPrice listPrice;
+            @Embedded
             private RetailPrice retailPrice;
             private boolean isEbook;
             private String buyLink;
+
+            public SaleInfo(String country, String saleability, ListPrice listPrice, RetailPrice retailPrice, boolean isEbook, String buyLink) {
+                this.country = country;
+                this.saleability = saleability;
+                this.listPrice = listPrice;
+                this.retailPrice = retailPrice;
+                this.isEbook = isEbook;
+                this.buyLink = buyLink;
+            }
 
             public boolean isEbook() {
                 return isEbook;
@@ -164,58 +221,68 @@ public class VolumeModel {
                 return buyLink;
             }
 
-            public class ListPrice {
-                private double amount;
-                private String currencyCode;
+            public static class ListPrice {
+                @SerializedName("amount")
+                private double list_price_amount;
+                @SerializedName("currencyCode")
+                private String list_price_currencyCode;
 
-                public double getAmount() {
-                    return amount;
+                public ListPrice(double list_price_amount, String list_price_currencyCode) {
+                    this.list_price_amount = list_price_amount;
+                    this.list_price_currencyCode = list_price_currencyCode;
                 }
 
-                public String getCurrencyCode() {
-                    return currencyCode;
+                public double getList_price_amount() {
+                    return list_price_amount;
+                }
+
+                public String getList_price_currencyCode() {
+                    return list_price_currencyCode;
+                }
+
+                public void setList_price_amount(double list_price_amount) {
+                    this.list_price_amount = list_price_amount;
+                }
+
+                public void setList_price_currencyCode(String list_price_currencyCode) {
+                    this.list_price_currencyCode = list_price_currencyCode;
+                }
+            }
+
+            public static class RetailPrice {
+                @SerializedName("amount")
+                private double retail_price_amount;
+                @SerializedName("currencyCode")
+                private String retail_price_currencyCode;
+
+                public RetailPrice(double retail_price_amount, String retail_price_currencyCode) {
+                    this.retail_price_amount = retail_price_amount;
+                    this.retail_price_currencyCode = retail_price_currencyCode;
+                }
+
+                public double getRetail_price_amount() {
+                    return retail_price_amount;
+                }
+
+                public String getRetail_price_currencyCode() {
+                    return retail_price_currencyCode;
+                }
+
+                public void setRetail_price_amount(double retail_price_amount) {
+                    this.retail_price_amount = retail_price_amount;
+                }
+
+                public void setRetail_price_currencyCode(String retail_price_currencyCode) {
+                    this.retail_price_currencyCode = retail_price_currencyCode;
                 }
             }
 
-            public class RetailPrice {
-                private double amount;
-                private String currencyCode;
-
-                public double getAmount() {
-                    return amount;
-                }
-
-                public String getCurrencyCode() {
-                    return currencyCode;
-                }
-            }
-        }
-
-        public class AccessInfo {
-            private String country;
-            private String webReaderLink;
-
-            public String getCountry() {
-                return country;
-            }
-
-            public String getWebReaderLink() {
-                return webReaderLink;
-            }
-
-            public class Epub {
-                private boolean isAvailable;
-                @SerializedName(value = "acsTokenLink")
-                private String token;
-
-                public boolean isAvailable() {
-                    return isAvailable;
-                }
-
-                public String getToken() {
-                    return token;
-                }
-            }
         }
     }
 }
+
+
+
+
+
+

@@ -1,28 +1,25 @@
 package com.example.bookreviewer.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.bookreviewer.Adapters.BooksAdapter;
 import com.example.bookreviewer.DataFiles.BookEndPoint;
 import com.example.bookreviewer.Models.VolumeModel;
 import com.example.bookreviewer.R;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
@@ -33,25 +30,97 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+// TODO: 15/05/2021 Implement viewmodel to handle screen rotations
 public class SearchActivity extends AppCompatActivity {
     private static final String TAG = "SearchActivity";
     private EditText edtTxtSearchBox;
     private ImageView btnSearch;
-    private TextView txtSearchByTitle, txtSearchByAuthor, txtSearchByPublisher, txtSearchBySubject;
-    //private Type itemsType = new TypeToken<ArrayList<VolumeModel.Items>>(){}.getType();
+    private TextView txtSearchByTitle, txtSearchByAuthor, txtSearchByPublisher, txtSearchBySubject, txtProgress, txtNextPage;
+    private SeekBar seekBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        setTitle("Search For A Book");
 
         initViews();
+
+        txtSearchByTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search = edtTxtSearchBox.getText().toString();
+                String newSearch = search + " intitle:";
+                edtTxtSearchBox.setText(newSearch);
+                edtTxtSearchBox.setSelection(newSearch.length());
+            }
+        });
+
+        txtSearchByAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search = edtTxtSearchBox.getText().toString();
+                String newSearch = search + " inauthor:";
+                edtTxtSearchBox.setText(newSearch);
+                edtTxtSearchBox.setSelection(newSearch.length());
+            }
+        });
+
+        txtSearchByPublisher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search = edtTxtSearchBox.getText().toString();
+                String newSearch = search + " inpublisher:";
+                edtTxtSearchBox.setText(newSearch);
+                edtTxtSearchBox.setSelection(newSearch.length());
+            }
+        });
+
+        txtSearchBySubject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search = edtTxtSearchBox.getText().toString();
+                String newSearch = search + " subject:";
+                edtTxtSearchBox.setText(newSearch);
+                edtTxtSearchBox.setSelection(newSearch.length());
+            }
+        });
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String searchTerms = edtTxtSearchBox.getText().toString();
+                String progress = String.valueOf(seekBar.getProgress());
                 if (!searchTerms.equals("")) {
-                    new GetDataTask(SearchActivity.this).execute(searchTerms);
+                    new GetDataTask(SearchActivity.this).execute(searchTerms, progress, "0");
+                }
+            }
+        });
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                txtProgress.setText(seekBar.getProgress() + "/40");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        // TODO: 16/05/2021 fix this 
+        txtNextPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchTerms = edtTxtSearchBox.getText().toString();
+                String progress = String.valueOf(seekBar.getProgress());
+                if (!searchTerms.equals("")) {
+                    new GetDataTask(SearchActivity.this).execute(searchTerms, progress, progress+1);
                 }
             }
         });
@@ -59,11 +128,20 @@ public class SearchActivity extends AppCompatActivity {
 
     private void initViews() {
         edtTxtSearchBox = findViewById(R.id.edtTxtSearchBox);
+        txtProgress = findViewById(R.id.txtProgress);
+        seekBar = findViewById(R.id.seekBar);
         btnSearch = findViewById(R.id.btnSearch);
         txtSearchByTitle = findViewById(R.id.txtSearchByTitle);
         txtSearchByAuthor = findViewById(R.id.txtSearchByAuthor);
         txtSearchByPublisher = findViewById(R.id.txtSearchByPublisher);
         txtSearchBySubject = findViewById(R.id.txtSearchBySubject);
+        txtNextPage = findViewById(R.id.txtNextPage);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent mainActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(mainActivityIntent);
     }
 
     private static class GetDataTask extends AsyncTask<String, ArrayList<VolumeModel.Items>, Void> {
@@ -96,7 +174,7 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... strings) {
             // TODO: 15/05/2021 Allow user to optimize amount of results, next page of volumes etc as well as other stuff
-            Call<VolumeModel> call = endPoint.getVolumes(strings[0], "15", 16); // 16 is the next 'page'
+            Call<VolumeModel> call = endPoint.getVolumes(strings[0], strings[1], Integer.parseInt(strings[2])); // 16 is the next 'page'
             call.enqueue(new Callback<VolumeModel>() {
                 @Override
                 public void onResponse(Call<VolumeModel> call, Response<VolumeModel> response) {
@@ -104,6 +182,7 @@ public class SearchActivity extends AppCompatActivity {
                         VolumeModel model = response.body();
                         if (model != null) {
                             ArrayList<VolumeModel.Items> booksSearched = model.getItems();
+                            Log.d(TAG, "onResponse: nigger?");
                             publishProgress(booksSearched);
                         }
                     }
@@ -128,7 +207,9 @@ public class SearchActivity extends AppCompatActivity {
             recView.setLayoutManager(new LinearLayoutManager(activityReference.get()));
             recView.setAdapter(adapter);
 
-            adapter.setBooks(values[0]);
+            if (values[0] != null) {
+                adapter.setBooks(values[0]);
+            }
         }
     }
 
