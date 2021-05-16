@@ -1,5 +1,6 @@
 package com.example.bookreviewer.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -30,9 +32,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-// TODO: 15/05/2021 Implement viewmodel to handle screen rotations
 public class SearchActivity extends AppCompatActivity {
     private static final String TAG = "SearchActivity";
+    public static final String SAVED_SEARCH_TERMS = "search_terms";
+    public static final String SAVED_PROGRESS = "progress";
     private EditText edtTxtSearchBox;
     private ImageView btnSearch;
     private TextView txtSearchByTitle, txtSearchByAuthor, txtSearchByPublisher, txtSearchBySubject, txtProgress, txtNextPage;
@@ -45,6 +48,16 @@ public class SearchActivity extends AppCompatActivity {
         setTitle("Search For A Book");
 
         initViews();
+
+        //handle screen rotations
+        if (null != savedInstanceState) {
+            String searchTerms = savedInstanceState.getString(SAVED_SEARCH_TERMS);
+            String progress = savedInstanceState.getString(SAVED_PROGRESS);
+            if (null != searchTerms && null != progress) {
+                Log.d(TAG, "onCreate: " + searchTerms + " " + progress);
+                new GetDataTask(this).execute(searchTerms, progress, "0");
+            }
+        }
 
         txtSearchByTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,15 +128,32 @@ public class SearchActivity extends AppCompatActivity {
         });
         // TODO: 16/05/2021 fix this 
         txtNextPage.setOnClickListener(new View.OnClickListener() {
+            int timesPressed = 0;
+            String searchTerms = edtTxtSearchBox.getText().toString();
             @Override
             public void onClick(View v) {
                 String searchTerms = edtTxtSearchBox.getText().toString();
                 String progress = String.valueOf(seekBar.getProgress());
-                if (!searchTerms.equals("")) {
-                    new GetDataTask(SearchActivity.this).execute(searchTerms, progress, progress+1);
+                if (!this.searchTerms.equals(searchTerms)) {
+                    timesPressed = 0;
                 }
+                String searchIndex = String.valueOf(seekBar.getProgress() + 1 + timesPressed);
+                if (!searchTerms.equals("")) {
+                    new GetDataTask(SearchActivity.this).execute(searchTerms, progress, searchIndex);
+                }
+                timesPressed++;
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String searchTerms = edtTxtSearchBox.getText().toString();
+        String progress = String.valueOf(seekBar.getProgress());
+
+        outState.putString(SAVED_SEARCH_TERMS, searchTerms);
+        outState.putString(SAVED_PROGRESS, progress);
     }
 
     private void initViews() {
@@ -173,7 +203,7 @@ public class SearchActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(String... strings) {
-            // TODO: 15/05/2021 Allow user to optimize amount of results, next page of volumes etc as well as other stuff
+            Log.d(TAG, "doInBackground: " + strings[2]);
             Call<VolumeModel> call = endPoint.getVolumes(strings[0], strings[1], Integer.parseInt(strings[2])); // 16 is the next 'page'
             call.enqueue(new Callback<VolumeModel>() {
                 @Override

@@ -58,16 +58,17 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
 
         holder.txtBookName.setText(boundedBook.getVolumeInfo().getTitle());
 
-        // TODO: 14/05/2021 Fix image loading issue in adapter
-        /*
-        String imageUrl = boundedBook.getVolumeInfo().getImageLinks().getThumbnail();
+        if (boundedBook.getVolumeInfo().getImageLinks() != null) {
+            holder.txtNoImage.setVisibility(View.GONE);
+            String imageUrl = boundedBook.getVolumeInfo().getImageLinks().getThumbnail();
 
-        Glide.with(context)
-                .asBitmap()
-                .load(imageUrl)
-                .into(holder.imageViewBook);
-                
-         */
+            Glide.with(context)
+                    .asBitmap()
+                    .load(imageUrl)
+                    .into(holder.imageViewBook);
+        } else {
+            holder.txtNoImage.setVisibility(View.VISIBLE);
+        }
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +112,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private MaterialCardView parent;
         private ImageView imageViewBook;
-        private TextView txtBookName;
+        private TextView txtBookName, txtNoImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -119,6 +120,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
             parent = itemView.findViewById(R.id.parent);
             imageViewBook = itemView.findViewById(R.id.imageBook);
             txtBookName = itemView.findViewById(R.id.txtBookName);
+            txtNoImage = itemView.findViewById(R.id.txtNoImage);
         }
     }
 

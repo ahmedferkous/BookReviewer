@@ -19,6 +19,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.bookreviewer.Adapters.ListAdapter;
 import com.example.bookreviewer.DataFiles.FavouriteBooksDatabase;
 import com.example.bookreviewer.Models.VolumeModel;
@@ -32,10 +33,11 @@ import java.util.ArrayList;
 
 import static com.example.bookreviewer.Activities.WebsiteActivity.LINK;
 
+// TODO: 16/05/2021 fix back pressed method 
 public class BookActivity extends AppCompatActivity {
     private static final String TAG = "BookActivity";
     public static final String BOOK_KEY = "book_key";
-    private TextView txtBookName, txtDecBy, txtAuthorNames, txtPubDate, txtPubBy, txtPublisher, txtDesc, txtRatingsCount, txtAverageRating, txtAuthorBy, txtEbookBy, txtRetailPriceBy, txtListedPriceBy, txtMaturityRating, txtPageCount, txtCountryName, txtSaleability, txtListedPrice, txtEbookStatus, txtRetailPrice, txtViewOnGoogleBooks, txtAddToFavourites;
+    private TextView txtBookName, txtDecBy, txtAuthorNames, txtPubDate, txtPubBy, txtPublisher, txtDesc, txtNoImageWarning, txtRatingsCount, txtAverageRating, txtAuthorBy, txtEbookBy, txtRetailPriceBy, txtListedPriceBy, txtMaturityRating, txtPageCount, txtCountryName, txtSaleability, txtListedPrice, txtEbookStatus, txtRetailPrice, txtViewOnGoogleBooks, txtAddToFavourites;
     private LinearLayout pubNameLinLayout, ratingsLinLayout, averageRatingLinLayout, maturityRatingLinLayout, pageCountLinLayout;
     private RelativeLayout categoriesRelLayout, countryRelLayout, saleabilityRelLayout, pubDateRelLayout;
     private RecyclerView categories;
@@ -104,6 +106,7 @@ public class BookActivity extends AppCompatActivity {
         txtBookName = findViewById(R.id.bookName);
         txtAuthorBy = findViewById(R.id.txtAuthorBy);
         txtAuthorNames = findViewById(R.id.txtAuthorNames);
+        txtNoImageWarning = findViewById(R.id.txtNoImageWarning);
         txtPubDate = findViewById(R.id.txtPubDate);
         txtPubBy = findViewById(R.id.txtPubBy);
         txtPublisher = findViewById(R.id.txtPublisher);
@@ -137,9 +140,17 @@ public class BookActivity extends AppCompatActivity {
     }
 
     private void setData(VolumeModel.Items book) {
-        // TODO: 14/05/2021 Load image here
-
         new ExistsInFavouritesDBTask(this).execute(book.getPrimary_key());
+
+        if (book.getVolumeInfo().getImageLinks() != null) {
+            Glide.with(this)
+                    .asBitmap()
+                    .load(book.getVolumeInfo().getImageLinks().getThumbnail())
+                    .into(bookImageView);
+        } else {
+            txtNoImageWarning.setVisibility(View.VISIBLE);
+            bookImageView.setVisibility(View.GONE);
+        }
 
         if (book.getVolumeInfo().getTitle() != null) {
             txtBookName.setText(book.getVolumeInfo().getTitle());
@@ -149,8 +160,14 @@ public class BookActivity extends AppCompatActivity {
 
         if (book.getVolumeInfo().getAuthors() != null) {
             String totalAuthors = "";
+            int i = 1;
             for (String s : book.getVolumeInfo().getAuthors()) {
-                totalAuthors += " " + s;
+                if (i != book.getVolumeInfo().getAuthors().size()) {
+                    totalAuthors += s + ", ";
+                } else {
+                    totalAuthors += s;
+                }
+                i++;
             }
             txtAuthorNames.setText(totalAuthors);
         } else {
@@ -245,11 +262,7 @@ public class BookActivity extends AppCompatActivity {
             categoriesRelLayout.setVisibility(View.GONE);
         }
     }
-    @Override
-    public void onBackPressed() {
-        Intent searchIntent = new Intent(this, SearchActivity.class);
-        startActivity(searchIntent);
-    }
+
     private static class ExistsInFavouritesDBTask extends AsyncTask<Integer, Void, Integer> {
         private WeakReference<BookActivity> activityReference;
         private FavouriteBooksDatabase db;

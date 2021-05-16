@@ -8,6 +8,6 @@
         android:layout_height="wrap_content"
         android:text="Item Name"
         android:id="@+id/txtItemName"
-        android:textSize="12sp"/>
+        android:textSize="13sp"/>
 
 </RelativeLayout>
