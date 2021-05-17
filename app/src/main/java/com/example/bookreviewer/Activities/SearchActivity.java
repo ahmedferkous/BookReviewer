@@ -212,7 +212,6 @@ public class SearchActivity extends AppCompatActivity {
                         VolumeModel model = response.body();
                         if (model != null) {
                             ArrayList<VolumeModel.Items> booksSearched = model.getItems();
-                            Log.d(TAG, "onResponse: nigger?");
                             publishProgress(booksSearched);
                         }
                     }
