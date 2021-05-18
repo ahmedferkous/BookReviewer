@@ -106,6 +106,21 @@ public class SearchActivity extends AppCompatActivity {
                 String progress = String.valueOf(seekBar.getProgress());
                 if (!searchTerms.equals("")) {
                     new GetDataTask(SearchActivity.this).execute(searchTerms, progress, "0");
+                    txtNextPage.setVisibility(View.VISIBLE);
+                    txtNextPage.setOnClickListener(new View.OnClickListener() {
+                        int timesPressed = seekBar.getProgress();
+                        @Override
+                        public void onClick(View v) {
+                            String searchTerms = edtTxtSearchBox.getText().toString();
+                            String progress = String.valueOf(seekBar.getProgress());
+                            String searchIndex = String.valueOf(timesPressed);
+                            timesPressed+=seekBar.getProgress();
+                            Log.d(TAG, "onClick: " + searchIndex);
+                            if (!searchTerms.equals("")) {
+                                new GetDataTask(SearchActivity.this).execute(searchTerms, progress, searchIndex);
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -126,25 +141,9 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
-        // TODO: 16/05/2021 fix this 
-        txtNextPage.setOnClickListener(new View.OnClickListener() {
-            int timesPressed = 0;
-            String searchTerms = edtTxtSearchBox.getText().toString();
-            @Override
-            public void onClick(View v) {
-                String searchTerms = edtTxtSearchBox.getText().toString();
-                String progress = String.valueOf(seekBar.getProgress());
-                if (!this.searchTerms.equals(searchTerms)) {
-                    timesPressed = 0;
-                }
-                String searchIndex = String.valueOf(seekBar.getProgress() + 1 + timesPressed);
-                if (!searchTerms.equals("")) {
-                    new GetDataTask(SearchActivity.this).execute(searchTerms, progress, searchIndex);
-                }
-                timesPressed++;
-            }
-        });
+
     }
+
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
