@@ -11,13 +11,16 @@ import java.util.ArrayList;
 
 public class ListConverter {
     private Gson gson = new Gson();
+
     @TypeConverter
     public String listToJson(ArrayList<String> list) {
         return gson.toJson(list);
     }
+
     @TypeConverter
     public ArrayList<String> jsonToList(String json) {
-        Type type = new TypeToken<ArrayList<String>>(){}.getType();
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
         return gson.fromJson(json, type);
     }
 }

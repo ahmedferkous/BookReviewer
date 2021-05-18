@@ -146,12 +146,11 @@
                 android:layout_alignParentBottom="true"
                 android:text="Next Page"
                 android:textStyle="bold"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
-
 
 
 </RelativeLayout>

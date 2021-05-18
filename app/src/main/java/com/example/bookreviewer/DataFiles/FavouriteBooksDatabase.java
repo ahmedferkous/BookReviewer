@@ -11,6 +11,7 @@ import com.example.bookreviewer.Models.VolumeModel;
 @Database(entities = {VolumeModel.Items.class}, version = 1)
 public abstract class FavouriteBooksDatabase extends RoomDatabase {
     public abstract BookDao bookDao();
+
     private static FavouriteBooksDatabase instance;
 
     public static synchronized FavouriteBooksDatabase getInstance(Context context) {

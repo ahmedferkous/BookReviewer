@@ -43,7 +43,8 @@ public class BookActivity extends AppCompatActivity {
     private RecyclerView categories;
     private ImageView bookImageView;
     private Gson gson = new Gson();
-    private Type itemsType = new TypeToken<VolumeModel.Items>() {}.getType();
+    private Type itemsType = new TypeToken<VolumeModel.Items>() {
+    }.getType();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -270,6 +271,7 @@ public class BookActivity extends AppCompatActivity {
         ExistsInFavouritesDBTask(BookActivity context) {
             activityReference = new WeakReference<>(context);
         }
+
         @Override
         protected Integer doInBackground(Integer... integers) {
             db = FavouriteBooksDatabase.getInstance(activityReference.get());
@@ -286,7 +288,7 @@ public class BookActivity extends AppCompatActivity {
             BookActivity activity = activityReference.get();
             if (activity == null || activity.isFinishing()) return;
 
-            switch(integer) {
+            switch (integer) {
                 case 0:
                     activityReference.get().findViewById(R.id.txtAddToFavourites).setVisibility(View.GONE);
                     break;
@@ -300,7 +302,7 @@ public class BookActivity extends AppCompatActivity {
         private WeakReference<BookActivity> activityReference;
         private FavouriteBooksDatabase db;
 
-        InsertIntoDBTask(BookActivity context){
+        InsertIntoDBTask(BookActivity context) {
             activityReference = new WeakReference<>(context);
         }
 

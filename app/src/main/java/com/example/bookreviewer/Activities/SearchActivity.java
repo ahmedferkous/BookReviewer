@@ -109,12 +109,13 @@ public class SearchActivity extends AppCompatActivity {
                     txtNextPage.setVisibility(View.VISIBLE);
                     txtNextPage.setOnClickListener(new View.OnClickListener() {
                         int timesPressed = seekBar.getProgress();
+
                         @Override
                         public void onClick(View v) {
                             String searchTerms = edtTxtSearchBox.getText().toString();
                             String progress = String.valueOf(seekBar.getProgress());
                             String searchIndex = String.valueOf(timesPressed);
-                            timesPressed+=seekBar.getProgress();
+                            timesPressed += seekBar.getProgress();
                             Log.d(TAG, "onClick: " + searchIndex);
                             if (!searchTerms.equals("")) {
                                 new GetDataTask(SearchActivity.this).execute(searchTerms, progress, searchIndex);
@@ -181,6 +182,7 @@ public class SearchActivity extends AppCompatActivity {
         GetDataTask(SearchActivity context) {
             activityReference = new WeakReference<>(context);
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -227,7 +229,7 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(ArrayList<VolumeModel.Items>... values) {
             super.onProgressUpdate(values);
-            
+
             SearchActivity activity = activityReference.get();
             if (activity == null || activity.isFinishing()) return;
 

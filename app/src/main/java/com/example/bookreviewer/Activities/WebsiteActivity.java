@@ -12,6 +12,7 @@ import com.example.bookreviewer.R;
 public class WebsiteActivity extends AppCompatActivity {
     private WebView webView;
     public static final String LINK = "link";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

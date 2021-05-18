@@ -41,7 +41,8 @@ public class FavouritesActivity extends AppCompatActivity implements BooksAdapte
     public void onBackPressed() {
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
         mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(mainActivityIntent);;
+        startActivity(mainActivityIntent);
+        ;
     }
 
     private static class GetFavouritesFromTask extends AsyncTask<Void, Void, ArrayList<VolumeModel.Items>> {
@@ -51,6 +52,7 @@ public class FavouritesActivity extends AppCompatActivity implements BooksAdapte
         GetFavouritesFromTask(FavouritesActivity context) {
             activityReference = new WeakReference<>(context);
         }
+
         @Override
         protected ArrayList<VolumeModel.Items> doInBackground(Void... voids) {
             db = FavouriteBooksDatabase.getInstance(activityReference.get());
@@ -79,6 +81,7 @@ public class FavouritesActivity extends AppCompatActivity implements BooksAdapte
             }
         }
     }
+
     private static class DeleteBookTask extends AsyncTask<VolumeModel.Items, Void, Void> {
         private WeakReference<FavouritesActivity> activityReference;
         private FavouriteBooksDatabase db;
@@ -86,6 +89,7 @@ public class FavouritesActivity extends AppCompatActivity implements BooksAdapte
         DeleteBookTask(FavouritesActivity context) {
             activityReference = new WeakReference<>(context);
         }
+
         @Override
         protected Void doInBackground(VolumeModel.Items... items) {
             db = FavouriteBooksDatabase.getInstance(activityReference.get());
