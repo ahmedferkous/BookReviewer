@@ -33,7 +33,6 @@ import java.util.ArrayList;
 
 import static com.example.bookreviewer.Activities.WebsiteActivity.LINK;
 
-// TODO: 16/05/2021 fix back pressed method 
 public class BookActivity extends AppCompatActivity {
     private static final String TAG = "BookActivity";
     public static final String BOOK_KEY = "book_key";
